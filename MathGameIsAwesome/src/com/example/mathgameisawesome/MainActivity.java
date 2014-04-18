@@ -1,8 +1,9 @@
 package com.example.mathgameisawesome;
 
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
+//import android.support.v7.app.ActionBarActivity;
+//import android.support.v7.app.ActionBar;
+//import android.support.v4.app.Fragment;
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -12,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.os.Build;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends Activity {
 
 	private TextView inputView = null;
 	//int num = RandRange(10, 1);
@@ -24,7 +25,10 @@ public class MainActivity extends ActionBarActivity {
 		setContentView(R.layout.activity_main);
 		//
 		inputView = (TextView) findViewById(R.id.inputView);
-		
+		int x = getRandomNumber(10, 1);
+		int y = getRandomNumber(10, 1);
+		int compVal = x + y;
+		inputView.setText(compVal);
 		
 	}
 
@@ -36,12 +40,19 @@ public class MainActivity extends ActionBarActivity {
 		return true;
 	}
 	
-	public void addToInput(String str) {
-		String text =inputView.getText().toString();
-		int len = txt.length();
-		
+	public int getRandomNumber(int max, int min) 
+	{
+		int range = (max - min) + 1;
+		return (int)(Math.random() * range);
 	}
 	
-	
-
+	public void numberCrunch()
+	{
+		int x = getRandomNumber(10, 1);
+		int y = getRandomNumber(10, 1);
+		int compVal = x + y;
+		
+		
+		
+	}
 }
