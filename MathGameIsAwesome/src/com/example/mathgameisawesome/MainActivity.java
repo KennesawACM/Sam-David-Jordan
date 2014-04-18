@@ -16,6 +16,7 @@ import android.os.Build;
 public class MainActivity extends Activity {
 
 	private TextView inputView = null;
+	
 	//int num = RandRange(10, 1);
 	
 	
