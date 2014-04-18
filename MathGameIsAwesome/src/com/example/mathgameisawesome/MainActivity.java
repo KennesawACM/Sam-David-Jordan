@@ -28,7 +28,7 @@ public class MainActivity extends Activity {
 		int x = getRandomNumber(10, 1);
 		int y = getRandomNumber(10, 1);
 		int compVal = x + y;
-		inputView.setText(compVal);
+		inputView.setText(""+ compVal);
 		
 	}
 
