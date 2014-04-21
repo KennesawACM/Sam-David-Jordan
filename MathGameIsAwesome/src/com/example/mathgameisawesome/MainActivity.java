@@ -1,5 +1,9 @@
 package com.example.mathgameisawesome;
 
+/*
+ * 
+ */
+
 //import android.support.v7.app.ActionBarActivity;
 //import android.support.v7.app.ActionBar;
 //import android.support.v4.app.Fragment;
@@ -18,6 +22,11 @@ public class MainActivity extends Activity {
 	private TextView inputView = null;
 	
 	//int num = RandRange(10, 1);
+	/*
+	 * HEY GUYS LOOK HERE So I had an idea.  If we simply use the random number generator method to generate 8 numbers in sets of 2, we can use the 
+	 * 	resulting 4 answers as potential answers to the true questions, which is one of these sets.  This way we don't have to 
+	 * 	deal with a number pad and instead can have only 4 clickable areas.  Thoughts?
+	 */
 	
 	
 	@Override
