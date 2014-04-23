@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">MathGameIsAwesome</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="app_name">MathGameTest</string>
+    <string name="hello_world">This is X</string>
     <string name="action_settings">Settings</string>
+    <string name="hello">This is Y</string>
+    <string name="Operator">Oper</string>
+    <string name="Close">Exit</string>
+    <string name="ans1">Ans 1</string>
+    <string name="ans2">Ans 2</string>
+    <string name="ans3">Ans 3</string>
 
 </resources>
