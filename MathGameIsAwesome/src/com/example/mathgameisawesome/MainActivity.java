@@ -1,9 +1,12 @@
 package com.example.mathgameisawesome;
 
+import java.util.ArrayList;
+
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
@@ -21,108 +24,633 @@ import android.os.Build;
 
 public class MainActivity extends ActionBarActivity {
 
-	private Button okButton;
+	private Button exitButton;
 	private Button answer1;
 	private Button answer2;
 	private Button answer3;
+	private Button resultButton;
+	TextView numTop;
+	TextView numBottom;
+	TextView op;
+
+	
 
 	@Override	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.fragment_main);
 		
-		int x = getRandomNumber(10,1);
-		while (x == 0)
-			x = getRandomNumber(10,1);
-		int y = getRandomNumber(10,1);
-		while (y == 0)
-			y = getRandomNumber(10,1);
+//		for (int i = 0; i < 20 ; i++) {
+//		
+//		}
+//		
+//		ArrayList<Integer> numList = new ArrayList<Integer>();
+//		int a = 1;
+//		int b = 2;
+//		int c = 3;
+//		numList.add(a);
+//		numList.add(b);
+//		numList.add(c);
+//		
+//		for (int i = 1; i < 4; i++){
+//			
+//		}
 		
-		AlertDialog alert1 = new AlertDialog.Builder(this).create();
-		alert1.setMessage("You win!");
+		//random numbers for buttons
+		int a = getRandomNumber(3,1);
+		int b = getRandomNumber(3,1);
+		int c = getRandomNumber(3,1);
+		final int operation = getRandomNumber(4,1);
 		
 		
 		
-		TextView textView = (TextView) findViewById(R.id.textView);
-		textView.setText(""+x);
-		textView.setTextColor(Color.GREEN);
-		textView.setBackgroundColor(Color.RED);
-		TextView text2 = (TextView) findViewById(R.id.text1);
-		text2.setText(""+y);
-		text2.setBackgroundColor(Color.GREEN);
-		text2.setTextColor(Color.BLACK);
-		TextView oper = (TextView) findViewById(R.id.operator);
-		oper.setText(displayOperator(0));
 		
-		this.answer1=(Button)this.findViewById(R.id.answer1);
-		answer1.setText(""+(x+y));
-		this.answer1.setOnClickListener(new OnClickListener() {
-			@SuppressWarnings("deprecation")
+		int integerX = getRandomNumber(10,1);
+		int integerY = getRandomNumber(10,1);
+		double doubleX = getRandomNumber(10,1);
+		double doubleY = getRandomNumber(10,1);
+
+		
+		resultButton = (Button) findViewById(R.id.resultButton);
+		resultButton.setOnClickListener(new OnClickListener() {
+
 			public void onClick(View v) {
-				AlertDialog alert1 = new AlertDialog.Builder(MainActivity.this).create();
-				alert1.setMessage("You win!");
-				alert1.setButton("OK!", new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {
-						Toast.makeText(getApplicationContext(), "You win!  Yay!", Toast.LENGTH_SHORT).show();
-					}
-				});
+				Builder alert1 = new AlertDialog.Builder(MainActivity.this);
+				alert1.setMessage("" + operation);
+				alert1.setPositiveButton("OK",null);
 				
 				alert1.show();
 			}
+			
 		});
 		
 		
-		this.answer2=(Button)this.findViewById(R.id.answer2); 
-		int w1 = getRandomNumber(10,1);
-		int w2 = getRandomNumber(10,1);
-		while ((w1+w2) == (x+y))
-		{
-			w1 = getRandomNumber(10,1);
-			w2 = getRandomNumber(10,1);
+		
+		
+		numTop = (TextView) findViewById(R.id.numTop);
+		
+		numTop.setTextColor(Color.GREEN);
+		numTop.setBackgroundColor(Color.RED);
+		numBottom = (TextView) findViewById(R.id.numBottom);
+		
+		numBottom.setBackgroundColor(Color.GREEN);
+		numBottom.setTextColor(Color.BLACK);
+		op = (TextView) findViewById(R.id.operator);
+		if (operation == 4) {
+			numTop.setText(""+doubleX);
+			numBottom.setText(""+doubleY);
+		} else {
+			numTop.setText(""+integerX);
+			numBottom.setText(""+integerY);
 		}
-		answer2.setText(""+(w1+w2));
-		this.answer2.setOnClickListener(new OnClickListener() {
-			@SuppressWarnings("deprecation")
-			public void onClick(View v) {
-				AlertDialog alert2 = new AlertDialog.Builder(MainActivity.this).create();
-				alert2.setMessage("Wrong Answer!");
-				alert2.setButton("OK!", new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {
-						Toast.makeText(getApplicationContext(), "Try again?", Toast.LENGTH_SHORT).show();
+		
+		if (operation == 1){
+			op.setText(displayOperator(0));
+			
+		}else if (operation ==2) {
+			op.setText(displayOperator(1));
+		}else if (operation ==3) {
+			op.setText(displayOperator(2));
+		}else {
+			op.setText(displayOperator(3));
+			}
+		
+		
+		
+		
+		/***
+		 * Addition
+		 */
+		if (operation == 1) {
+			if (a == 1) {
+				this.answer1=(Button)this.findViewById(R.id.answer1);
+				answer1.setText(""+(integerX+integerY));
+				this.answer1.setOnClickListener(new OnClickListener() {
+					
+					public void onClick(View v) {
+						Builder alert1 = new AlertDialog.Builder(MainActivity.this);
+						alert1.setMessage("You win!");
+						alert1.setPositiveButton("OK",null);
+						
+						
+						alert1.show();
 					}
 				});
-				alert2.show();
 			}
-		});
-		
-		
-		this.answer3=(Button)this.findViewById(R.id.answer3);
-		int w3 = getRandomNumber(10,1);
-		int w4 = getRandomNumber(10,1);
-		while ((w3+w4)==(x+y) && (w3+w4) == (w1+w2))
-		{
-			w3 = getRandomNumber(10,1);
-			w4 = getRandomNumber(10,1);
-		}
-		answer3.setText(""+(w3+w4));
-		this.answer3.setOnClickListener(new OnClickListener() {
-			@SuppressWarnings("deprecation")
-			public void onClick(View v) {
-				AlertDialog alert3 = new AlertDialog.Builder(MainActivity.this).create();
-				alert3.setMessage("Wrong answer!");
-				alert3.setButton("OK!", new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {
-						Toast.makeText(getApplicationContext(), "Try again?", Toast.LENGTH_SHORT).show();
+			else if (a != 1) {
+				
+				this.answer1=(Button)this.findViewById(R.id.answer1); 
+				int w1 = getRandomNumber(10,1);
+				int w2 = getRandomNumber(10,1);
+				while ((w1+w2) == (integerX+integerY))
+				{
+					w1 = getRandomNumber(10,1);
+					w2 = getRandomNumber(10,1);
+				}
+				answer1.setText(""+(w1+w2));
+				this.answer1.setOnClickListener(new OnClickListener() {
+				
+					public void onClick(View v) {
+						Builder alert2 = new AlertDialog.Builder(MainActivity.this);
+						alert2.setMessage("Wrong Answer!");
+						alert2.setPositiveButton("OK",null);
+						alert2.show();
 					}
 				});
-				alert3.show();
 			}
-		});
+			if (b == 1 && a != 1) {
+				this.answer2=(Button)this.findViewById(R.id.answer2);
+				answer2.setText(""+(integerX+integerY));
+				this.answer2.setOnClickListener(new OnClickListener() {
+					
+					public void onClick(View v) {
+						Builder alert1 = new AlertDialog.Builder(MainActivity.this);
+						alert1.setMessage("You win!");
+						alert1.setPositiveButton("OK",null);
+						
+						
+						alert1.show();
+					}
+				});
+				
+			}else  {
+				
+				this.answer2=(Button)this.findViewById(R.id.answer2); 
+				int w1 = getRandomNumber(10,1);
+				int w2 = getRandomNumber(10,1);
+				while ((w1+w2) == (integerX+integerY))
+				{
+					w1 = getRandomNumber(10,1);
+					w2 = getRandomNumber(10,1);
+				}
+				answer2.setText(""+(w1+w2));
+				this.answer2.setOnClickListener(new OnClickListener() {
+				
+					public void onClick(View v) {
+						Builder alert2 = new AlertDialog.Builder(MainActivity.this);
+						alert2.setMessage("Wrong Answer!");
+						alert2.setPositiveButton("OK",null);
+						alert2.show();
+					}
+				});
+			}
+			
+			if (c == 1 && a != 1 && b != 1) {
+				this.answer3=(Button)this.findViewById(R.id.answer3);
+				answer3.setText(""+(integerX+integerY));
+				this.answer3.setOnClickListener(new OnClickListener() {
+					
+					public void onClick(View v) {
+						Builder alert1 = new AlertDialog.Builder(MainActivity.this);
+						alert1.setMessage("You win!");
+						alert1.setPositiveButton("OK",null);
+						
+						
+						alert1.show();
+					}
+				});
+				
+			} else if (a != 1 && b != 1) {
+				this.answer3=(Button)this.findViewById(R.id.answer3);
+				answer3.setText(""+(integerX+integerY));
+				this.answer3.setOnClickListener(new OnClickListener() {
+					
+					public void onClick(View v) {
+						Builder alert1 = new AlertDialog.Builder(MainActivity.this);
+						alert1.setMessage("You win!");
+						alert1.setPositiveButton("OK",null);
+						
+						
+						alert1.show();
+					}
+				});
+				
+			}
+			else {
+				
+				this.answer3=(Button)this.findViewById(R.id.answer3); 
+				int w1 = getRandomNumber(10,1);
+				int w2 = getRandomNumber(10,1);
+				while ((w1+w2) == (integerX+integerY))
+				{
+					w1 = getRandomNumber(10,1);
+					w2 = getRandomNumber(10,1);
+				}
+				answer3.setText(""+(w1+w2));
+				this.answer3.setOnClickListener(new OnClickListener() {
+				
+					public void onClick(View v) {
+						Builder alert2 = new AlertDialog.Builder(MainActivity.this);
+						alert2.setMessage("Wrong Answer!");
+						alert2.setPositiveButton("OK",null);
+						alert2.show();
+					}
+				});
+			}
+			
+		}
+		/***
+		 * Multiplication
+		 * 
+		 * ***/
+		else if (operation == 2) {
+			if (a == 1) {
+				this.answer1=(Button)this.findViewById(R.id.answer1);
+				answer1.setText(""+(integerX*integerY));
+				this.answer1.setOnClickListener(new OnClickListener() {
+					
+					public void onClick(View v) {
+						Builder alert1 = new AlertDialog.Builder(MainActivity.this);
+						alert1.setMessage("You win!");
+						alert1.setPositiveButton("OK",null);
+						
+						
+						alert1.show();
+					}
+				});
+			}
+			else if (a != 1) {
+				
+				this.answer1=(Button)this.findViewById(R.id.answer1); 
+				int w1 = getRandomNumber(10,1);
+				int w2 = getRandomNumber(10,1);
+				while ((w1*w2) == (integerX*integerY))
+				{
+					w1 = getRandomNumber(10,1);
+					w2 = getRandomNumber(10,1);
+				}
+				answer1.setText(""+(w1*w2));
+				this.answer1.setOnClickListener(new OnClickListener() {
+				
+					public void onClick(View v) {
+						Builder alert2 = new AlertDialog.Builder(MainActivity.this);
+						alert2.setMessage("Wrong Answer!");
+						alert2.setPositiveButton("OK",null);
+						alert2.show();
+					}
+				});
+			}
+			if (b == 1 && a != 1) {
+				this.answer2=(Button)this.findViewById(R.id.answer2);
+				answer2.setText(""+(integerX*integerY));
+				this.answer2.setOnClickListener(new OnClickListener() {
+					
+					public void onClick(View v) {
+						Builder alert1 = new AlertDialog.Builder(MainActivity.this);
+						alert1.setMessage("You win!");
+						alert1.setPositiveButton("OK",null);
+						
+						
+						alert1.show();
+					}
+				});
+				
+			}else  {
+				
+				this.answer2=(Button)this.findViewById(R.id.answer2); 
+				int w1 = getRandomNumber(10,1);
+				int w2 = getRandomNumber(10,1);
+				while ((w1*w2) == (integerX*integerY))
+				{
+					w1 = getRandomNumber(10,1);
+					w2 = getRandomNumber(10,1);
+				}
+				answer2.setText(""+(w1+w2));
+				this.answer2.setOnClickListener(new OnClickListener() {
+				
+					public void onClick(View v) {
+						Builder alert2 = new AlertDialog.Builder(MainActivity.this);
+						alert2.setMessage("Wrong Answer!");
+						alert2.setPositiveButton("OK",null);
+						alert2.show();
+					}
+				});
+			}
+			
+			if (c == 1 && a != 1 && b != 1) {
+				this.answer3=(Button)this.findViewById(R.id.answer3);
+				answer3.setText(""+(integerX*integerY));
+				this.answer3.setOnClickListener(new OnClickListener() {
+					
+					public void onClick(View v) {
+						Builder alert1 = new AlertDialog.Builder(MainActivity.this);
+						alert1.setMessage("You win!");
+						alert1.setPositiveButton("OK",null);
+						
+						
+						alert1.show();
+					}
+				});
+				
+			} else if (a != 1 && b != 1) {
+				this.answer3=(Button)this.findViewById(R.id.answer3);
+				answer3.setText(""+(integerX*integerY));
+				this.answer3.setOnClickListener(new OnClickListener() {
+					
+					public void onClick(View v) {
+						Builder alert1 = new AlertDialog.Builder(MainActivity.this);
+						alert1.setMessage("You win!");
+						alert1.setPositiveButton("OK",null);
+						
+						
+						alert1.show();
+					}
+				});
+				
+			}
+			else {
+				
+				this.answer3=(Button)this.findViewById(R.id.answer3); 
+				int w1 = getRandomNumber(10,1);
+				int w2 = getRandomNumber(10,1);
+				while ((w1*w2) == (integerX*integerY))
+				{
+					w1 = getRandomNumber(10,1);
+					w2 = getRandomNumber(10,1);
+				}
+				answer3.setText(""+(w1*w2));
+				this.answer3.setOnClickListener(new OnClickListener() {
+				
+					public void onClick(View v) {
+						Builder alert2 = new AlertDialog.Builder(MainActivity.this);
+						alert2.setMessage("Wrong Answer!");
+						alert2.setPositiveButton("OK",null);
+						alert2.show();
+					}
+				});
+			}
+		}
+		
+		/***
+		 * Subtraction
+		 */
+		else if (operation == 3) {
+			if (a == 1) {
+				this.answer1=(Button)this.findViewById(R.id.answer1);
+				answer1.setText(""+(integerX-integerY));
+				this.answer1.setOnClickListener(new OnClickListener() {
+					
+					public void onClick(View v) {
+						Builder alert1 = new AlertDialog.Builder(MainActivity.this);
+						alert1.setMessage("You win!");
+						alert1.setPositiveButton("OK",null);
+						
+						
+						alert1.show();
+					}
+				});
+			}
+			else if (a != 1) {
+				
+				this.answer1=(Button)this.findViewById(R.id.answer1); 
+				int w1 = getRandomNumber(10,1);
+				int w2 = getRandomNumber(10,1);
+				while ((w1-w2) == (integerX-integerY))
+				{
+					w1 = getRandomNumber(10,1);
+					w2 = getRandomNumber(10,1);
+				}
+				answer1.setText(""+(w1-w2));
+				this.answer1.setOnClickListener(new OnClickListener() {
+				
+					public void onClick(View v) {
+						Builder alert2 = new AlertDialog.Builder(MainActivity.this);
+						alert2.setMessage("Wrong Answer!");
+						alert2.setPositiveButton("OK",null);
+						alert2.show();
+					}
+				});
+			}
+			if (b == 1 && a != 1) {
+				this.answer2=(Button)this.findViewById(R.id.answer2);
+				answer2.setText(""+(integerX-integerY));
+				this.answer2.setOnClickListener(new OnClickListener() {
+					
+					public void onClick(View v) {
+						Builder alert1 = new AlertDialog.Builder(MainActivity.this);
+						alert1.setMessage("You win!");
+						alert1.setPositiveButton("OK",null);
+						
+						
+						alert1.show();
+					}
+				});
+				
+			}else  {
+				
+				this.answer2=(Button)this.findViewById(R.id.answer2); 
+				int w1 = getRandomNumber(10,1);
+				int w2 = getRandomNumber(10,1);
+				while ((w1-w2) == (integerX-integerY))
+				{
+					w1 = getRandomNumber(10,1);
+					w2 = getRandomNumber(10,1);
+				}
+				answer2.setText(""+(w1-w2));
+				this.answer2.setOnClickListener(new OnClickListener() {
+				
+					public void onClick(View v) {
+						Builder alert2 = new AlertDialog.Builder(MainActivity.this);
+						alert2.setMessage("Wrong Answer!");
+						alert2.setPositiveButton("OK",null);
+						alert2.show();
+					}
+				});
+			}
+			
+			if (c == 1 && a != 1 && b != 1) {
+				this.answer3=(Button)this.findViewById(R.id.answer3);
+				answer3.setText(""+(integerX-integerY));
+				this.answer3.setOnClickListener(new OnClickListener() {
+					
+					public void onClick(View v) {
+						Builder alert1 = new AlertDialog.Builder(MainActivity.this);
+						alert1.setMessage("You win!");
+						alert1.setPositiveButton("OK",null);
+						
+						
+						alert1.show();
+					}
+				});
+				
+			} else if (a != 1 && b != 1) {
+				this.answer3=(Button)this.findViewById(R.id.answer3);
+				answer3.setText(""+(integerX-integerY));
+				this.answer3.setOnClickListener(new OnClickListener() {
+					
+					public void onClick(View v) {
+						Builder alert1 = new AlertDialog.Builder(MainActivity.this);
+						alert1.setMessage("You win!");
+						alert1.setPositiveButton("OK",null);
+						
+						
+						alert1.show();
+					}
+				});
+				
+			}
+			else {
+				
+				this.answer3=(Button)this.findViewById(R.id.answer3); 
+				int w1 = getRandomNumber(10,1);
+				int w2 = getRandomNumber(10,1);
+				while ((w1-w2) == (integerX-integerY))
+				{
+					w1 = getRandomNumber(10,1);
+					w2 = getRandomNumber(10,1);
+				}
+				answer3.setText(""+(w1-w2));
+				this.answer3.setOnClickListener(new OnClickListener() {
+				
+					public void onClick(View v) {
+						Builder alert2 = new AlertDialog.Builder(MainActivity.this);
+						alert2.setMessage("Wrong Answer!");
+						alert2.setPositiveButton("OK",null);
+						alert2.show();
+					}
+				});
+			}
+		}
+		/***
+		 * Division
+		 */
+		else if (operation == 4) {
+			if (a == 1) {
+				this.answer1=(Button)this.findViewById(R.id.answer1);
+				answer1.setText(""+(doubleX/doubleY));
+				this.answer1.setOnClickListener(new OnClickListener() {
+					
+					public void onClick(View v) {
+						Builder alert1 = new AlertDialog.Builder(MainActivity.this);
+						alert1.setMessage("You win!");
+						alert1.setPositiveButton("OK",null);
+						
+						
+						alert1.show();
+					}
+				});
+			}
+			else if (a != 1) {
+				
+				this.answer1=(Button)this.findViewById(R.id.answer1); 
+				double w1 = getRandomNumber(10,0);
+				double w2 = getRandomNumber(10,0);
+				while ((w1/w2) == (doubleX/doubleY))
+				{
+					w1 = getRandomNumber(10,0);
+					w2 = getRandomNumber(10,0);
+				}
+				answer1.setText(""+(w1/w2));
+				this.answer1.setOnClickListener(new OnClickListener() {
+				
+					public void onClick(View v) {
+						Builder alert2 = new AlertDialog.Builder(MainActivity.this);
+						alert2.setMessage("Wrong Answer!");
+						alert2.setPositiveButton("OK",null);
+						alert2.show();
+					}
+				});
+			}
+			if (b == 1 && a != 1) {
+				this.answer2=(Button)this.findViewById(R.id.answer2);
+				answer2.setText(""+(doubleX/doubleY));
+				this.answer2.setOnClickListener(new OnClickListener() {
+					
+					public void onClick(View v) {
+						Builder alert1 = new AlertDialog.Builder(MainActivity.this);
+						alert1.setMessage("You win!");
+						alert1.setPositiveButton("OK",null);
+						
+						
+						alert1.show();
+					}
+				});
+				
+			}else  {
+				
+				this.answer2=(Button)this.findViewById(R.id.answer2); 
+				double w1 = getRandomNumber(10,0);
+				double w2 = getRandomNumber(10,0);
+				while ((w1/w2) == (doubleX/doubleX))
+				{
+					w1 = getRandomNumber(10,0);
+					w2 = getRandomNumber(10,0);
+				}
+				answer2.setText(""+(w1/w2));
+				this.answer2.setOnClickListener(new OnClickListener() {
+				
+					public void onClick(View v) {
+						Builder alert2 = new AlertDialog.Builder(MainActivity.this);
+						alert2.setMessage("Wrong Answer!");
+						alert2.setPositiveButton("OK",null);
+						alert2.show();
+					}
+				});
+			}
+			
+			if (c == 1 && a != 1 && b != 1) {
+				this.answer3=(Button)this.findViewById(R.id.answer3);
+				answer3.setText(""+(doubleX/doubleY));
+				this.answer3.setOnClickListener(new OnClickListener() {
+					
+					public void onClick(View v) {
+						Builder alert1 = new AlertDialog.Builder(MainActivity.this);
+						alert1.setMessage("You win!");
+						alert1.setPositiveButton("OK",null);
+						
+						
+						alert1.show();
+					}
+				});
+				
+			} else if (a != 1 && b != 1) {
+				this.answer3=(Button)this.findViewById(R.id.answer3);
+				answer3.setText(""+(doubleX/doubleY));
+				this.answer3.setOnClickListener(new OnClickListener() {
+					
+					public void onClick(View v) {
+						Builder alert1 = new AlertDialog.Builder(MainActivity.this);
+						alert1.setMessage("You win!");
+						alert1.setPositiveButton("OK",null);
+						
+						
+						alert1.show();
+					}
+				});
+				
+			}
+			else {
+				
+				this.answer3=(Button)this.findViewById(R.id.answer3); 
+				double w1 = getRandomNumber(10,0);
+				double w2 = getRandomNumber(10,0);
+				while ((w1/w2) == (doubleX/doubleY))
+				{
+					w1 = getRandomNumber(10,0);
+					w2 = getRandomNumber(10,0);
+				}
+				answer3.setText(""+(w1/w2));
+				this.answer3.setOnClickListener(new OnClickListener() {
+				
+					public void onClick(View v) {
+						Builder alert2 = new AlertDialog.Builder(MainActivity.this);
+						alert2.setMessage("Wrong Answer!");
+						alert2.setPositiveButton("OK",null);
+						alert2.show();
+					}
+				});
+			}
+		}
 		
 		
 		
-		this.okButton=(Button)this.findViewById(R.id.okbutton);
-		this.okButton.setOnClickListener(new OnClickListener() {
+		
+		
+		
+		
+		
+		this.exitButton=(Button)this.findViewById(R.id.exitButton);
+		this.exitButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				finish();
 			}
@@ -134,27 +662,30 @@ public class MainActivity extends ActionBarActivity {
 	public int getRandomNumber(int max, int min)
 	{
 		int range = (max-min) + 1;
-		return (int)(Math.random() * range);
+		return min + (int)(Math.random() * range);
 	}
+	
+	
 	
 	public String displayOperator (int num)
 	{
+		
 		if (num == 0)
 		{
 			return "+";
 		}
 		else if (num == 1)
 		{
-			return "-";
+			return "*";
 		}
 		else if (num == 2)
 		{
-			return "*";
+			return "-";
 		}
-		else
-		{
+		else {
 			return "/";
 		}
+		
 	}
 	
 }
